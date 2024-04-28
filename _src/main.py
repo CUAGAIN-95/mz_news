@@ -7,6 +7,8 @@ from _crawler import Crawler
 import os
 from dotenv import load_dotenv
 
+import streamlit as st
+
 
 class Main():
     def __init__ (self):
@@ -20,15 +22,31 @@ class Main():
         chat_ = Chat()
         gemini_ = Gemini()
         crawler_ = Crawler()
-        article_list = crawler_.crawler()
+
+        # streamlit 실행
+
+        st.title('Welcome to MZ-News')
+        st.subheader('쉽고 빠르게 뉴스를 알려주는 chatbot, MZ-News입니다.')
+
+        category = st.sidebar.selectbox(
+            '대형 카테고리를 선택하세요.',
+            ['정치', '사회', '경제', '생활 및 문화', 'IT 및 과학', '세계'  ]
+        )
+
+        st.text(f'{category} 항목 뉴스를 크롤링합니다. 잠시만 기다려주세요.')
+        article_list = crawler_.crawler(category)
+        vector_db = VectorStore().vector_store(article_list)
+
+        st.text('해당 항목 뉴스 크롤링이 완료되었습니다.')
         # data_dict = crawler_.crawling('20240419')
         # Update().update()
         # data_string = Update().dict_to_str(data_dict)
 
-        vector_db = VectorStore().vector_store(article_list)
+        
 
         while True:
-            input_prompt = chat_.chat()
+            user_input = st.text_input('질문을 입력하세요 : ')
+            input_prompt = chat_.chat(user_input)
             if input_prompt == "끝":
                 print('chatbot을 종료합니다.')
                 break
@@ -50,9 +68,9 @@ class Main():
             
             chain = chat_.return_chain(retriever_data)
             response = gemini_.gemini(chain, input_prompt, in_out)
-            print('----답변 드리겠습니다----')
-            print(response['answer']) 
-            self.output_list.append(response['answer'])
+            chat_response = response['answer']
+            st.write(f'답변은 다음과 같습니다. : {chat_response}')
+            self.output_list.append(chat_response)
 
 
 
