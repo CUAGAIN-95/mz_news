@@ -35,7 +35,7 @@ class VectorStore():
         vector_db에 추가시키고 싶은 문장을 추가하는 메소드
         추가 후 해당 vector_db를 반환하는 메소드.
         '''
-
+        
         print('crawling한 문자를 처리하고 있습니다. 잠시만 기다려주세요.')
         text_splitter = RecursiveCharacterTextSplitter(
                 chunk_size = 500,

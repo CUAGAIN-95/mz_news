@@ -36,24 +36,38 @@ class Main():
             '대형 카테고리를 선택하세요.',
             ['정치', '사회', '경제', '생활 및 문화', 'IT 및 과학', '세계'  ]
         )
-        if not self.vector_db :
-            st.text(f'{category} 항목 뉴스를 크롤링합니다. 잠시만 기다려주세요.')
-            article_list = crawler_.crawler(category)
-            self.vector_db = VectorStore().vector_store(article_list)
-            vector_db = self.vector_db
-
-            st.text('해당 항목 뉴스 크롤링이 완료되었습니다.')
-            # data_dict = crawler_.crawling('20240419')
-            # Update().update()
-            # data_string = Update().dict_to_str(data_dict)
-
+        
         with st.form('form', clear_on_submit=True):
             input_prompt = st.text_input('질문을 입력하세요. : ', key='input')
             submitted = st.form_submit_button('Send')
 
+            
+
+
         if True:
             if submitted and input_prompt:
                 self.input_list.append(input_prompt)
+
+                if self.vector_db is None :
+                    st.text(f'{category} 항목 뉴스를 크롤링합니다. 잠시만 기다려주세요.')
+                    article_list = crawler_.crawler(category)
+                    st.text('아래는 크롤링 결과물의 일부입니다.')
+                    st.text(f'{article_list[0:4]}')
+                    self.vector_db = VectorStore().vector_store(article_list)
+                    vector_db = self.vector_db
+                    st.text(f'vectorDB 위치 : {vector_db}')
+
+                    st.text('해당 항목 뉴스 크롤링이 완료되었습니다.')
+
+                # st.text(f'{category} 항목 뉴스를 크롤링합니다. 잠시만 기다려주세요.')
+                # article_list = crawler_.crawler(category)
+                # st.text('아래는 크롤링 결과물의 일부입니다.')
+                # st.text(f'{article_list[0:4]}')
+                # vector_db = VectorStore().vector_store(article_list)
+                # # vector_db = self.vector_db
+
+                # st.text('해당 항목 뉴스 크롤링이 완료되었습니다.')
+
                 retriever_ = Retriever(vector_db, input_prompt)
                 retriever_data = retriever_.find_similar_documents()
 
