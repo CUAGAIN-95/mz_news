@@ -53,7 +53,7 @@ class Main():
                     article_list = crawler_.crawler(category)
                     st.text('아래는 크롤링 결과물의 일부입니다.')
                     st.text(f'{article_list[0:4]}')
-                    self.vector_db = VectorStore().vector_store(article_list)
+                    self.vector_db = VectorStore().vector_store(article_list, category=category)
                     vector_db = self.vector_db
                     st.text(f'vectorDB 위치 : {vector_db}')
 
