@@ -7,7 +7,6 @@ from _crawler import Crawler
 import os
 import shutil
 from dotenv import load_dotenv
-from langchain_chroma import Chroma
 
 import streamlit as st
 
@@ -98,7 +97,7 @@ class Main():
             st.text('성공적으로 Reset되었습니다.')
         st.text('꽤 오래 전에 질문을 했다면, 한 번 Reset버튼을 눌러주세요.')
         st.text('더 정확하게 뉴스를 알려드릴게요.')
-        
+
 if __name__ == "__main__":
     m = Main()
     m.main()
