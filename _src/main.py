@@ -7,6 +7,7 @@ from _retriever import Retriever
 from _crawler import Crawler
 from _logger import Logger
 import os
+import shutil
 from dotenv import load_dotenv
 import streamlit as st
 
@@ -15,7 +16,9 @@ class Main():
         self.input_list = []
         self.output_list = []
         self.vector_db = None
+        self.db_path = "../_data/"
 
+         
     def main(self):
         try:
             if "GOOGLE_API_KEY" not in os.environ:
@@ -80,6 +83,16 @@ class Main():
             Logger().logger(self, message="success")
         except Exception as e:
             Logger().logger(self, e)
-
+        if st.button('Reset'):
+            # _data 폴더 안에 있는 모든 하위 폴더 삭제
+            for root, dirs, files in os.walk(self.db_path, topdown=False):
+                for name in dirs:
+                    dir_path = os.path.join(root, name)
+                    shutil.rmtree(dir_path)
+                    print(f"{dir_path} 폴더를 삭제했습니다.")
+            st.text('성공적으로 Reset되었습니다.')
+        st.text('꽤 오래 전에 질문을 했다면, 한 번 Reset버튼을 눌러주세요.')
+        st.text('더 정확하게 뉴스를 알려드릴게요.')
+        
 if __name__ == "__main__":
     Main().main()

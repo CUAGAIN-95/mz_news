@@ -1,5 +1,6 @@
 # vector_store.py
 
+
 # import os
 from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -14,6 +15,7 @@ class VectorStore():
 
     def vector_store(self, article_list, category):
         print('crawling한 기사를 처리하고 있습니다. 잠시만 기다려주세요.')
+
         
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size = 500,
@@ -33,7 +35,7 @@ class VectorStore():
         )
         Logger().logger(self, "success")
         return self.vector_db
-
+    
     def vector_store_load(self, category):
         db_path = f"../_date/{category}"
         
