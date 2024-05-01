@@ -1,0 +1,9 @@
+2024-05-01 19:42:01 : Main.main >> success
+2024-05-01 19:42:19 : Crawler.crawler >> success
+2024-05-01 19:42:30 : VectorStore.vector_store >> success
+2024-05-01 19:42:30 : Retriever.find_similar_documents >> success
+2024-05-01 19:42:30 : Chat.return_chain >> success
+2024-05-01 19:42:32 : Gemini.gemini >> success
+2024-05-01 19:42:32 : Main.main >> success
+2024-05-01 19:42:53 : Main.main >> success
+2024-05-01 19:42:56 : Main.main >> success
