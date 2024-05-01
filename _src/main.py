@@ -46,15 +46,15 @@ class Main():
                         st.text("질문을 입력해 주세요.")
                     else:
                         self.input_list.append(input_prompt)
-                        data_directory = os.listdir("../_data")
-                        if self.vector_db not in data_directory :
+                        data_directory = os.listdir("../_data/")
+                        if category not in data_directory :
                             st.text(f'{category} 항목 뉴스를 크롤링합니다. 잠시만 기다려주세요.')
                             article_list = crawler_.crawler(category)
-                            st.text('아래는 크롤링 결과물의 일부입니다.')
-                            st.text(f'{article_list[0:4]}')
+                            # st.text('아래는 크롤링 결과물의 일부입니다.')
+                            # st.text(f'{article_list[0:4]}')
                             self.vector_db = VectorStore().vector_store(article_list, category=category)
-                            st.text(f'vectorDB 위치 : {self.vector_db}')
-                            st.text('해당 항목 뉴스 크롤링이 완료되었습니다.')
+                            # st.text(f'vectorDB 위치 : {self.vector_db}')
+                            # st.text('해당 항목 뉴스 크롤링이 완료되었습니다.')
                         else:
                             st.text(f"기존에 있던 {category} 기사들을 활용합니다.")
                             self.vector_db = VectorStore().vector_store_load(category=category)
@@ -93,6 +93,6 @@ class Main():
             st.text('성공적으로 Reset되었습니다.')
         st.text('꽤 오래 전에 질문을 했다면, 한 번 Reset버튼을 눌러주세요.')
         st.text('더 정확하게 뉴스를 알려드릴게요.')
-
+        
 if __name__ == "__main__":
     Main().main()
