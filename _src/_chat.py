@@ -18,13 +18,14 @@ class Chat():
         self.input_prompt = ...
         self.langchain_model = ChatGoogleGenerativeAI(model='gemini-pro', temperature=0.7)
 
-    def chat(self):
+    def chat(self, input_prompt):
         """
         사용자의 질문을 받는 함수. 받은 내용을 그대로 input_prompt(str) 변수에 저장
         """
-        print('----질문을 입력해주세요----')
-        print('tip : 종료를 원할 경우 "끝"을 입력해 주세요.')
-        self.input_prompt = input('User : ')
+        # print('----질문을 입력해주세요----')
+        # print('tip : 종료를 원할 경우 "끝"을 입력해 주세요.')
+        # self.input_prompt = input('User : ')
+        self.input_prompt = input_prompt
         # self.input_list.append(self.input_prompt)
         # Logger().logger(self, "test")
         return self.input_prompt
