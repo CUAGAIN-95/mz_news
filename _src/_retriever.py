@@ -1,9 +1,6 @@
-# from langchain_text_splitters import RecursiveCharacterTextSplitter
-# from langchain_community.vectorstores import DeepLake
-# from langchain_google_genai.embeddings import GoogleGenerativeAIEmbeddings
-# from langchain.docstore.document import Document
+# retriever.py
 
-
+from _logger import Logger
 
 class Retriever(): # retriver() -> Retriever()
     def __init__(self, vectorstore, input_text):
@@ -14,4 +11,5 @@ class Retriever(): # retriver() -> Retriever()
     def find_similar_documents(self, top_k =3):
         retriever = self.vectorstore.as_retriever(search_kwargs={'k': top_k}) # 'k' : n 유사도 높은 순서대로 n 개 검색.
 
+        Logger().logger(self, "success")
         return retriever
