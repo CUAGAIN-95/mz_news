@@ -4,6 +4,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains import create_retrieval_chain
+from langchain.retrievers import MergerRetriever
 from _logger import Logger
 
 class Chat():
@@ -26,9 +27,12 @@ class Chat():
 
     
     def return_chain(self, retriever):
+        '''
+        retriever와 template을 연결해 chain으로 반환하는 함수
+        '''
         template = '''
         비서처럼 정확하게 말해주되, 전반적으로 간략하게 말해줘. output은 내용이 끝날 때 마다 엔터를 쳐줘.
-        chat history는 사용자의 이전 답변들을 모아놓은 텍스트니 이걸 잘 반영해줘
+        chat history는 사용자의 이전 대화 내역들을 모아놓은 텍스트야. 필요할 때 잘 반영해줘
         chat history : {in_out}
         context : {context}
         input : {input} 
@@ -40,3 +44,12 @@ class Chat():
         
         Logger().logger(self, "success")
         return retrieval_chain
+
+    def merge_retriever(self, ret1, ret2):
+        """
+        특정한 retriever를 엮어주는 함수
+        추후 return_chain함수에서 사용할 한 개의 retriever를 반환
+        """
+        merge_retriever = MergerRetriever(retriever=[ret1, ret2])
+        Logger().logger(self, "success")
+        return merge_retriever
