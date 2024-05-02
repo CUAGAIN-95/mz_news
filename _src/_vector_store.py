@@ -37,7 +37,7 @@ class VectorStore():
         return self.vector_db
     
     def vector_store_load(self, category):
-        db_path = f"../_date/{category}"
+        db_path = f"../_data/{category}"
         
         print("기존의 crawling한 기사들을 처리하고 있습니다. 잠시만 기다려주세요.")
         self.vector_db = Chroma(
