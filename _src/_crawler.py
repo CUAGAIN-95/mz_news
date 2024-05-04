@@ -5,45 +5,29 @@ from requests import get
 from datetime import datetime
 import pytz
 import re
-
-# import time 코드 작동 시간 체크용
+from _logger import Logger
 
 class Crawler():
     def __init__(self):
         self.url_list = [] # 크롤링할 url을 모아놓는 list
         self.article_list = [] # 크롤링한 기사(str type)들을 모아놓는 리스트
-        # self.category = int() # 카테고리 대분류
         self.date = datetime.today().strftime('%Y%m%d') # 오늘 날짜 (str type)
         self.part_url_dict = {} # {소분류명 : url, 소분류명 : url... }이런 식으로 구성됨
         self.category_url = {
-            '정치' : ["/section/100", "정치"],
-            '경제' : ["/section/101", "경제"],
-            '사회' : ["/section/102", "사회"],
-            '생활 및 문화' : ["/section/103", "생활 및 문화"],
-            'IT 및 과학' : ["/section/105", "IT 및 과학"],
-            '세계' : ["/section/104", "세계"],
+            '정치' : "/section/100",
+            '경제' : "/section/101",
+            '사회' : "/section/102",
+            '생활 및 문화' : "/section/103",
+            'IT 및 과학' : "/section/105",
+            '세계' : "/section/104"
         }
+
     def crawler(self, category):
-        # step0. 기초 세우기
         headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'}
         main_url = 'https://news.naver.com'
-        
-        # # step1. 대분류 카테고리 입력 및 대분류 카테고리별 소분류 카테고리 추출
-        # print("-------------------------------------------------------------------------------")
-        # print("|정치 > 1 | 경제 > 2 | 사회 > 3 | 생활 및 문화 > 4 | IT 및 과학 > 5 | 세계 > 6|")
-        # print("-------------------------------------------------------------------------------")
+        part_url = main_url + self.category_url[category]
 
-        # self.category = 0
-        # while not (1 <= self.category <= 6 ):
-        #     try:
-        #         self.category = int(input(" * 원하시는 카테고리를 입력하세요 > "))
-        #     except:
-        #         print("--- (1)에서 (6)사이의 숫자를 입력해주세요---") ## logger 넣기
-        
-        
-        part_url = main_url + self.category_url[category][0]
-
-        print(f'{self.category_url[category][1]} 카테고리를 선택했습니다.')
+        print(f'{category} 카테고리를 선택했습니다.')
         print(f'해당 카테고리의 기본 url은 다음과 같습니다. "{part_url}"')
 
         dom = BeautifulSoup(get(part_url, headers = headers).text, 'html.parser')
@@ -106,5 +90,6 @@ class Crawler():
         print(f'crawling을 완료한 article 개수 : {len(self.article_list)}')
         print(f'crawling을 실패한 article 개수 : {fail}')
         print('-----------------------------------------')
-    
+        
+        Logger().logger(self, "success")
         return self.article_list
