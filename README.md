@@ -1,20 +1,20 @@
 # mz_news
 langchain 모델을 사용하여 뉴스를 요약해줍니다.
 
-# Problem & Solving
+# 문제 정의
 
-### Purpose
+### 목적
 - 20-30대의 포털 내 뉴스 콘텐츠 이용률 증가
 
-### Problem
+### 문제
 - 전체적인 뉴스 이용률 하락
 - 포털 내 뉴스 콘텐츠 점유율 감소
 
-### Solution
+### 목표
 - 20-30대가 쉽게 접할 수 있는 매체를 활용한 뉴스 제공
 - 가장 높은 뉴스 점유율을 가진 네이버 뉴스 콘텐츠를 활용한 프로그램 개발
 
-### Effect
+### 기대 효과
 - 20-30대의 뉴스 접근성 향상
 - 네이버 내 뉴스 콘텐츠 이용률 증가
 
@@ -67,9 +67,7 @@ streamlit run main.py
 (예 : ‘뉴스를 요약해줘’, ‘오늘 무슨 일이 있었어?’ 등)
 - 챗봇이 질문에 대해 대답합니다.
 - 질문을 완료했다면 Reset버튼을 눌러주세요.
-- 작동 예시
-
-[](https://youtu.be/WtBYROg6oDs)
+- [작동예시 영상](https://youtu.be/WtBYROg6oDs)
 
 # Trouble Shooting
 | As-Is | Trouble | To-Be | Result |
@@ -79,7 +77,8 @@ streamlit run main.py
 | 터미널에서만 작동하는 프로그램 | 낮은 가시성 | streamlit을 활용한 프로토타입 개발 | 가시성 향상 |
 
 # System Flow
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/9ea30782-3dd3-4e5a-a5d0-f2d71f21c6c9/dcd7a57f-ecf3-4569-a315-e618bf53994f/Untitled.png)
+![image](https://github.com/CUAGAIN-95/mz_news/assets/149945578/16012e39-70d1-406c-9e0a-0d274e10a722)
+
 
 # 파일별 기능명세서
 ### System 영역
@@ -102,17 +101,17 @@ streamlit run main.py
 - Chat prompt templete 설정
 - LLM, Retriever를 토대로 chain을 엮어주고 return
 - Input
-    - Retriever : `**_retriever.py**`에서 받은 retriever
+    - Retriever : `_retriever.py`에서 받은 retriever
 - 기타
     - langchain_model : 사용할 LLM을 저장할 변수
 
 **`_gemini.py`**
-- `**main.py**`에서 받은 input(질문)과 과거기록(in_out), 
- **`_chat.py`**에서 받은 chain을 토대로 API요청
+- `main.py`에서 받은 input(질문)과 과거기록(in_out), 
+  `_chat.py`에서 받은 chain을 토대로 API요청
 - Input
     - input_prompt : 질문 내용을 저정하는 변수
     - in_out : 과거 기록(질문 및 대답)을 기록하는 변수
-    - chain : `**_chat.py**`에서 받은 chain
+    - chain : `_chat.py`에서 받은 chain
 - Output
     - Response : 질문 + 대답을 위해 사용한 문서 
     + 과거 기록을 활용한 gemini의 대답
@@ -137,10 +136,10 @@ streamlit run main.py
 - Output
     - article_list : 사용자가 선택한 카테고리의 뉴스 텍스트
 
-`**_vectorstore.py**`
-- **`_crawler.py`**에서 return한 article_list에서 news_text를 받음
+**`_vectorstore.py`**
+- `_crawler.py`에서 return한 article_list에서 news_text를 받음
 - 쪼개야 하는 news text의 embedding값을 구한 뒤, vector_db에 저장
-- 저장된 db는 추후 **`_retriever.py`**에 전송됨
+- 저장된 db는 추후 `_retriever.py`에 전송됨
 - Input
     - article_list : 쪼갤 news text list. **`_crawler.py`**와 연계됨
 - Output
